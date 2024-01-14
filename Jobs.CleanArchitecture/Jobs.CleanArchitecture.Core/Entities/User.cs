@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Net.NetworkInformation;
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-sealed internal class User(string name, string email, string password, uint idStatus) : BaseEntity
+sealed public class User(string name, string email, string password, uint idStatus) : BaseEntity
 {
     [Column("name")]
     public string Name { get; private set; } = name;

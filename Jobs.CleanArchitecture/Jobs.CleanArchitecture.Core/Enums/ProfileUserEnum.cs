@@ -1,6 +1,6 @@
 ﻿namespace Jobs.CleanArchitecture.Core.Enums;
 
-internal enum ProfileUserEnum
+public enum ProfileUserEnum
 {
    Administrator = 0,
    Recruiter = 1 << 0,

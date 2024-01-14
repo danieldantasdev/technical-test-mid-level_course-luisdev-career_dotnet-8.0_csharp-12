@@ -2,7 +2,7 @@
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-sealed internal class Subscribe(uint idUser, uint idjob, DateTime date) : BaseEntity
+sealed public class Subscribe(uint idUser, uint idjob, DateTime date) : BaseEntity
 {
     [Column("id_user")]
     public uint IdUser { get; private set; } = idUser;

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-sealed internal class Log : BaseEntity
+sealed public class Log : BaseEntity
 {
     [Column("table")]
     public TableEnum Table { get; private set; }

@@ -2,7 +2,7 @@
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-sealed internal class Job(string title, string description, string location, decimal salary, uint idStatus) : BaseEntity
+sealed public class Job(string title, string description, string location, decimal salary, uint idStatus) : BaseEntity
 {
     [Column("title")]
     public string Title { get; private set; } = title;

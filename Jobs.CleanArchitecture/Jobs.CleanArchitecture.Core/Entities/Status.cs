@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-sealed internal class Status(StatusEnum name, string description) : BaseEntity
+sealed public class Status(StatusEnum name, string description) : BaseEntity
 {
     [Column("name")]
     public StatusEnum Name { get; private set; } = name;

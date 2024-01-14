@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-sealed internal class Profile(uint idUser, ProfileUserEnum name, uint idStatus)
+sealed public class Profile(uint idUser, ProfileUserEnum name, uint idStatus)
 {
     [Column("id_user")]
     public uint IdUser { get; private set; } = idUser;

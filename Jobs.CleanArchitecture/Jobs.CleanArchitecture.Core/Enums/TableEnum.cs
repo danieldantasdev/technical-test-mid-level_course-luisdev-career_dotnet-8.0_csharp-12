@@ -1,6 +1,6 @@
 ﻿namespace Jobs.CleanArchitecture.Core.Enums;
 
-internal enum TableEnum
+public enum TableEnum
 {
    User = 0,
    Profile = 1 << 0,

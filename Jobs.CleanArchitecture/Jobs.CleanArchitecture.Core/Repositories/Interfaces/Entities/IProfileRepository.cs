@@ -2,6 +2,6 @@
 
 namespace Jobs.CleanArchitecture.Core.Repositories.Interfaces.Entities;
 
-internal interface IProfileRepository : IBaseRepository<Profile>
+public interface IProfileRepository : IBaseRepository<Profile>
 {
 }
