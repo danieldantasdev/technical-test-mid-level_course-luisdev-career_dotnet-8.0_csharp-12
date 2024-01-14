@@ -58,7 +58,11 @@ de emprego.
 
 ## Diagrama de Classes
 
-![class-diagram](../Documentation/class-diagram.png)
+![class-diagram](../Jobs.Documentations/class-diagram.png)
+
+## Enumeradores
+
+![enum](../Jobs.Documentations/enum.png)
 
 ## Regras Negociais
 
