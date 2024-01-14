@@ -1,6 +1,6 @@
 ﻿using Jobs.CleanArchitecture.Core.Entities;
 
-namespace Jobs.CleanArchitecture.Core.Repositories.Interfaces;
+namespace Jobs.CleanArchitecture.Core.Repositories.Interfaces.Entities;
 
 internal interface IUserRepository : IBaseRepository<User>
 {
