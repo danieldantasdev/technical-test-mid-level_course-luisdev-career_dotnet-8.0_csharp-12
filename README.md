@@ -58,11 +58,11 @@ de emprego.
 
 ## Diagrama de Classes
 
-![class-diagram](../Jobs.Documentations/class-diagram.png)
+![class-diagram](Jobs.Documentations/class-diagram.png)
 
 ## Enumeradores
 
-![enum](../Jobs.Documentations/enum.png)
+![enum](Jobs.Documentations/enum.png)
 
 ## Regras Negociais
 
