@@ -10,6 +10,15 @@ internal sealed class SqlConnectionFactoryService(IConfiguration configuration) 
 
     public SqlConnection CreateConnection()
     {
-        return new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        try
+        {
+            return new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+        }
+        catch (Exception exception)
+        {
+
+            throw new Exception(exception.Message);
+        }
     }
 }

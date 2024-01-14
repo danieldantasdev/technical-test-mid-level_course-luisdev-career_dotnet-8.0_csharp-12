@@ -1,4 +1,5 @@
 ﻿using Jobs.CleanArchitecture.Core.Services.Interfaces;
+using Jobs.CleanArchitecture.Infra.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jobs.CleanArchitecture.Infra.Extensions
@@ -7,7 +8,7 @@ namespace Jobs.CleanArchitecture.Infra.Extensions
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            services.AddScoped<ISqlConnectionFactoryService, ISqlConnectionFactoryService>();
+            services.AddScoped<ISqlConnectionFactoryService, SqlConnectionFactoryService>();
             return services;
         }
     }
