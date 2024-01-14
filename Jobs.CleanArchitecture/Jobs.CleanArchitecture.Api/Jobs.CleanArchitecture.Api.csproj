@@ -11,4 +11,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Jobs.CleanArchitecture.Application\Jobs.CleanArchitecture.Application.csproj" />
+    <ProjectReference Include="..\Jobs.CleanArchitecture.Infra\Jobs.CleanArchitecture.Infra.csproj" />
+  </ItemGroup>
+
 </Project>
