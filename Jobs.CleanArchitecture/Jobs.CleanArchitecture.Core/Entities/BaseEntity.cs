@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-internal class BaseEntity
+internal abstract class BaseEntity()
 {
     [Key]
     [Column("id")]
