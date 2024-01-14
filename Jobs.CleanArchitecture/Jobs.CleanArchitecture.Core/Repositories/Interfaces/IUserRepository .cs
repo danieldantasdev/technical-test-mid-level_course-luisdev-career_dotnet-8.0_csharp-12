@@ -4,4 +4,7 @@ namespace Jobs.CleanArchitecture.Core.Repositories.Interfaces;
 
 internal interface IUserRepository : IBaseRepository<User>
 {
+    Task<List<User>> GetAllFilterByName(string name);
+    Task Active(uint id);
+    Task Inactive(uint id);
 }
