@@ -12,18 +12,25 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
 
     public async Task<int> Post(Job entity)
     {
-        await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
-        var result = await sqlConnection.ExecuteAsync(
-             @"
+        try
+        {
+            await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
+            var result = await sqlConnection.ExecuteAsync(
+                 @"
                 INSERT INTO Job 
                     (title, description, location, salary, id_status) 
                 VALUES 
                     (@Title, @Description, @Location, @Salary, @IdStatus)
             ",
-                 entity
-         );
+                     entity
+             );
 
-        return result;
+            return result;
+        }
+        catch (Exception exception)
+        {
+            throw new Exception(exception.Message);
+        }
     }
 
     public async Task<List<Job>> GetAll()
