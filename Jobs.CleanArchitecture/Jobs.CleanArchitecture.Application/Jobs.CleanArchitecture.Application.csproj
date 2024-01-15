@@ -15,4 +15,9 @@
 		<ProjectReference Include="..\Jobs.CleanArchitecture.Core\Jobs.CleanArchitecture.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Queries\Jobs\GetAll\" />
+	  <Folder Include="Queries\Jobs\GetById\" />
+	</ItemGroup>
+
 </Project>

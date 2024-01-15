@@ -1,7 +1,7 @@
 ﻿using Jobs.CleanArchitecture.Core.Repositories.Interfaces.Entities;
 using MediatR;
 
-namespace Jobs.CleanArchitecture.Application.Commands.Jobs;
+namespace Jobs.CleanArchitecture.Application.Commands.Jobs.Create;
 
 public class CreateJobCommandHandler(IJobRepository jobRepository) : IRequestHandler<CreateJobCommandInputModel, CreateJobCommandViewModel>
 {

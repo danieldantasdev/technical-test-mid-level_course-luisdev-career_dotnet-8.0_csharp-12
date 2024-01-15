@@ -31,21 +31,41 @@ sealed public class Log : BaseEntity
         DeleteOn = null;
     }
 
-    public void Create(string createdBy, DateTime createdOn)
+    public Log(TableEnum table, string createdBy, DateTime createdOn, string updateBy, DateTime updateOn, string deleteBy, DateTime deleteOn)
     {
+        Table = table;
         CreatedBy = createdBy;
         CreatedOn = createdOn;
-    }
-
-    public void Update(string? updateBy, DateTime? updateOn)
-    {
         UpdateBy = updateBy;
         UpdateOn = updateOn;
-    }
-
-    public void Delete(string? deleteBy, DateTime? deleteOn)
-    {
         DeleteBy = deleteBy;
         DeleteOn = deleteOn;
+    }
+
+    public static Log Create(string createdBy, DateTime createdOn)
+    {
+        return new Log
+        {
+            CreatedBy = createdBy,
+            CreatedOn = createdOn
+        };
+    }
+
+    public static Log Update(string? updateBy, DateTime? updateOn)
+    {
+        return new Log
+        {
+            UpdateBy = updateBy,
+            UpdateOn = updateOn
+        };
+    }
+
+    public static Log Delete(string? deleteBy, DateTime? deleteOn)
+    {
+        return new Log
+        {
+            DeleteBy = deleteBy,
+            DeleteOn = deleteOn
+        };
     }
 }
