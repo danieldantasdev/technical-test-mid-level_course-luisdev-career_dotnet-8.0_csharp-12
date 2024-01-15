@@ -43,9 +43,10 @@ GO;
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'susbscribe')
 BEGIN
     CREATE TABLE [dbo].[susbscribe] (
-        id_job INT NOT NULL PRIMARY KEY,
-        id_user INT NOT NULL PRIMARY KEY,
+        id_job INT NOT NULL,
+        id_user INT NOT NULL,
         date DATETIME,
+        PRIMARY KEY (id_job, id_user),
         FOREIGN KEY (id_job) REFERENCES [dbo].[job](id),
         FOREIGN KEY (id_user) REFERENCES [dbo].[user](id)
     );
