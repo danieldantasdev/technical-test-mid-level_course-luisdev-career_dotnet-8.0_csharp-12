@@ -15,21 +15,22 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
         try
         {
             await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
+
             var result = await sqlConnection.ExecuteAsync(
-                 @"
-                INSERT INTO Job 
-                    (title, description, location, salary, id_status) 
-                VALUES 
-                    (@Title, @Description, @Location, @Salary, @IdStatus)
-            ",
-                     entity
-             );
+                @"
+                    INSERT INTO job 
+                        (title, description, location, salary, id_status) 
+                    VALUES 
+                        (@Title, @Description, @Location, @Salary, @IdStatus)
+                ",
+                entity
+            );
 
             return result;
         }
         catch (Exception exception)
         {
-            throw new Exception(exception.Message);
+            throw new Exception("Error while query insert execution", exception);
         }
     }
 
@@ -38,7 +39,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
         throw new NotImplementedException();
     }
 
-    public async Task<Job> GetById(uint id)
+    public async Task<Job> GetById(int id)
     {
         throw new NotImplementedException();
     }
