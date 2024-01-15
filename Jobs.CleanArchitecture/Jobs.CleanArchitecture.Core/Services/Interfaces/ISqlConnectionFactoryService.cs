@@ -5,4 +5,5 @@ namespace Jobs.CleanArchitecture.Core.Services.Interfaces;
 public interface ISqlConnectionFactoryService
 {
     SqlConnection CreateConnection();
+    void CloseConnection(SqlConnection connection);
 }

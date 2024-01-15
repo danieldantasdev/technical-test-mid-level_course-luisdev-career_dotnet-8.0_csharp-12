@@ -1,6 +1,7 @@
 ﻿using Jobs.CleanArchitecture.Core.Services.Interfaces;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace Jobs.CleanArchitecture.Infra.Services.Implementations;
 
@@ -18,7 +19,22 @@ internal sealed class SqlConnectionFactoryService(IConfiguration configuration) 
         catch (Exception exception)
         {
 
-            throw new Exception(exception.Message);
+            throw new Exception("Error while open connection: " + exception.Message);
+        }
+    }
+
+    public void CloseConnection(SqlConnection connection)
+    {
+        try
+        {
+            if (connection is not null && connection.State is not ConnectionState.Closed)
+            {
+                connection.Close();
+            }
+        }
+        catch (Exception exception)
+        {
+            throw new Exception("Error while closing connection: " + exception.Message);
         }
     }
 }
