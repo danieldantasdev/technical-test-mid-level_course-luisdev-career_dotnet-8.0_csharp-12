@@ -1,6 +1,7 @@
 ﻿using Jobs.CleanArchitecture.Application.Commands.Jobs.Create;
 using Jobs.CleanArchitecture.Application.Commands.Jobs.Delete;
 using Jobs.CleanArchitecture.Application.Commands.Jobs.Update;
+using Jobs.CleanArchitecture.Application.Query.Jobs.GetAll;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,11 +24,8 @@ namespace Jobs.CleanArchitecture.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            // Implementação para obter todos os trabalhos
-            // Exemplo: var jobs = await _mediator.Send(new GetAllJobsQuery());
-            // return Ok(jobs);
-            return NoContent();
-
+            var jobs = await _mediator.Send(new GetAllJobsQueryViewModel());
+            return Ok(jobs);
         }
 
         [HttpGet("{id}")]

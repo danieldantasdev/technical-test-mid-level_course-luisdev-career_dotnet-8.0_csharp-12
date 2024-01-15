@@ -14,7 +14,12 @@ public record UpdateJobCommandInputModel : IRequest<UpdateJobCommandViewModel>
 
     public UpdateJobCommandInputModel()
     {
-        
+        Id = 0;
+        Title = string.Empty;
+        Description = string.Empty;
+        Location = string.Empty;
+        Salary = 0;
+        IdStatus = 0;
     }
 
     public UpdateJobCommandInputModel(int id, string title, string description, string location, decimal salary, int idStatus)
