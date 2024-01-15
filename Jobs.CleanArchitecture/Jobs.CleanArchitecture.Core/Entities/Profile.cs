@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-sealed public class Profile(uint idUser, ProfileUserEnum name, uint idStatus)
+sealed public class Profile(int idUser, ProfileUserEnum name, int idStatus)
 {
     [Column("id_user")]
-    public uint IdUser { get; private set; } = idUser;
+    public int IdUser { get; private set; } = idUser;
     [Column("name")]
     public ProfileUserEnum Name { get; private set; } = name;
     [Column("id_status")]
-    public uint IdStatus { get; private set; } = idStatus;
+    public int IdStatus { get; private set; } = idStatus;
 }

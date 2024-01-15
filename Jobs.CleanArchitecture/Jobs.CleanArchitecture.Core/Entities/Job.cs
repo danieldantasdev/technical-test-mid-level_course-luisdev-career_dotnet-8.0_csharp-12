@@ -2,24 +2,39 @@
 
 namespace Jobs.CleanArchitecture.Core.Entities;
 
-sealed public class Job(string title, string description, string location, decimal salary, uint idStatus) : BaseEntity
+sealed public class Job : BaseEntity
 {
     [Column("title")]
-    public string Title { get; private set; } = title;
+    public string Title { get; set; }
     [Column("description")]
-    public string Description { get; private set; } = description;
+    public string Description { get; set; }
     [Column("location")]
-    public string Location { get; private set; } = location;
+    public string Location { get; set; }
     [Column("salary")]
-    public decimal Salary { get; private set; } = salary;
+    public decimal Salary { get; set; }
     [Column("id_status")]
-    public uint IdStatus { get; private set; } = idStatus;
+    public int IdStatus { get; set; }
 
-    public void Update(string title, string description, string location, decimal salary)
+    public Job()
+    {
+        
+    }
+
+    public Job(string title, string description, string location, decimal salary, int idStatus)
     {
         Title = title;
         Description = description;
         Location = location;
         Salary = salary;
+        IdStatus = idStatus;
+    }
+
+    public void Update(string title, string description, string location, decimal salary, int idStatus)
+    {
+        Title = title;
+        Description = description;
+        Location = location;
+        Salary = salary;
+        IdStatus = idStatus;
     }
 }

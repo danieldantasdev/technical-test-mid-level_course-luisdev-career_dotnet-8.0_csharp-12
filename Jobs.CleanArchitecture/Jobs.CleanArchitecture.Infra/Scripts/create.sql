@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[job] (
-    id INT NOT NULL PRIMARY KEY,
+    id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
     title VARCHAR(50),
     description VARCHAR(50),
     location VARCHAR(50),

@@ -7,5 +7,5 @@ public abstract class BaseEntity()
 {
     [Key]
     [Column("id")]
-    public uint Id { get; private set; }
+    public int Id { get; private set; }
 }

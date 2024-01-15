@@ -16,8 +16,4 @@
     <ProjectReference Include="..\Jobs.CleanArchitecture.Infra\Jobs.CleanArchitecture.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
