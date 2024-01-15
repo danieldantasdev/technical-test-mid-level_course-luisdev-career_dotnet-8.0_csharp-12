@@ -22,7 +22,7 @@ BEGIN
         description VARCHAR(50),
         location VARCHAR(50),
         salary DECIMAL(18, 2),
-        id_status INT NOT NULL UNIQUE,
+        id_status INT NOT NULL,
         FOREIGN KEY (id_status) REFERENCES [dbo].[status](id)
     );
 END
@@ -34,7 +34,7 @@ BEGIN
         id INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
         name VARCHAR(50),
         password VARCHAR(255),
-        id_status INT NOT NULL UNIQUE,
+        id_status INT NOT NULL,
         FOREIGN KEY (id_status) REFERENCES [dbo].[status](id)
     );
 END
@@ -57,7 +57,7 @@ BEGIN
     CREATE TABLE [dbo].[profile] (
         id_user INT NOT NULL PRIMARY KEY,
         name INT,
-        id_status INT NOT NULL UNIQUE,
+        id_status INT NOT NULL,
         FOREIGN KEY (id_user) REFERENCES [dbo].[user](id),
         FOREIGN KEY (id_status) REFERENCES [dbo].[status](id)
     );
