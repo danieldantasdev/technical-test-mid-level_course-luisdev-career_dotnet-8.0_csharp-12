@@ -42,7 +42,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
             await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
 
             var jobs = await sqlConnection.QueryAsync<Job>(
-                "SELECT * FROM job"
+                "SELECT j.id Id, j.title Title, j.description Description, j.location Location, j.salary Salary, j.id_status IdStatus FROM job j"
             );
 
             return jobs.AsList();
@@ -60,7 +60,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
             await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
 
             var job = await sqlConnection.QueryFirstOrDefaultAsync<Job>(
-                "SELECT * FROM job WHERE id = @Id",
+                "SELECT j.id Id, j.title Title, j.description Description, j.location Location, j.salary Salary, j.id_status IdStatus FROM job j WHERE j.id = @Id",
                 new { Id = id }
             );
 
@@ -109,7 +109,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
 
             var result = await sqlConnection.ExecuteAsync(
                 "DELETE FROM job WHERE id = @id",
-                id
+                new { id }
             );
 
             return result;

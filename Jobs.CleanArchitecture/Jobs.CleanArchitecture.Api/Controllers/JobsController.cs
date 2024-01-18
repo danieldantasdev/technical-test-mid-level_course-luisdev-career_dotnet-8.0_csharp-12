@@ -68,10 +68,12 @@ namespace Jobs.CleanArchitecture.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(DeleteJobCommandInputModel inputModel)
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] DeleteJobCommandInputModel inputModel)
         {
-            var result = await _mediator.Send(inputModel);
+            DeleteJobCommandInputModel deleteJobCommandInputModel = DeleteJobCommandInputModel.Create(inputModel.Id);
+
+            var result = await _mediator.Send(deleteJobCommandInputModel);
 
             if (result is null)
             {
