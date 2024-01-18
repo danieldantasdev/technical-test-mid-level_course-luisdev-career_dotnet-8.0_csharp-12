@@ -2,6 +2,7 @@
 using Jobs.CleanArchitecture.Application.Commands.Jobs.Delete;
 using Jobs.CleanArchitecture.Application.Commands.Jobs.Update;
 using Jobs.CleanArchitecture.Application.Query.Jobs.GetAll;
+using Jobs.CleanArchitecture.Application.Query.Jobs.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,18 +25,23 @@ namespace Jobs.CleanArchitecture.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var jobs = await _mediator.Send(new GetAllJobsQueryViewModel());
+            var jobs = await _mediator.Send(new GetAllJobsQueryInputModel());
             return Ok(jobs);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById()
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetByidJobQueryInputModel inputModel)
         {
-            // Implementação para obter um trabalho por ID
-            // Exemplo: var job = await _mediator.Send(new GetJobByIdQuery { Id = id });
-            // if (job == null) return NotFound();
-            // return Ok(job);
-            return NoContent();
+            GetByidJobQueryInputModel getByidJobQueryInputModel = GetByidJobQueryInputModel.Create(inputModel.Id);
+
+            var job = await _mediator.Send(getByidJobQueryInputModel);
+           
+            if (job is null)
+            {
+                return NotFound();
+            }
+           
+            return Ok(job);
         }
 
         [HttpPut("{id}")]
@@ -62,7 +68,7 @@ namespace Jobs.CleanArchitecture.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{deleteJobCommandInputModel.Id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(DeleteJobCommandInputModel inputModel)
         {
             var result = await _mediator.Send(inputModel);
