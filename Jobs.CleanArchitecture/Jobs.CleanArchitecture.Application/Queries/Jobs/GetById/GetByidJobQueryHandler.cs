@@ -1,17 +1,39 @@
-﻿using Jobs.CleanArchitecture.Core.Entities;
+﻿using Jobs.CleanArchitecture.Application.Query.Jobs.GetAll;
+using Jobs.CleanArchitecture.Core.Entities;
 using Jobs.CleanArchitecture.Core.Repositories.Interfaces.Entities;
+using Jobs.CleanArchitecture.Core.ViewModels;
 using MediatR;
+using System.Net;
 
 namespace Jobs.CleanArchitecture.Application.Query.Jobs.GetById;
 
-public class GetByidJobQueryHandler(IJobRepository jobRepository) : IRequestHandler<GetByidJobQueryInputModel, GetByidJobQueryViewModel>
+public class GetByidJobQueryHandler(IJobRepository jobRepository) : IRequestHandler<GetByidJobQueryInputModel, GenericViewModel<GetByidJobQueryViewModel>>
 {
     private readonly IJobRepository _jobRepository = jobRepository;
 
-    public async Task<GetByidJobQueryViewModel> Handle(GetByidJobQueryInputModel request, CancellationToken cancellationToken)
+    public async Task<GenericViewModel<GetByidJobQueryViewModel>> Handle(GetByidJobQueryInputModel request, CancellationToken cancellationToken)
     {
-        Job job = await _jobRepository.GetById(request.Id);
+        try
+        {
+            Job jobRepository = await _jobRepository.GetById(request.Id);
 
-        return GetByidJobQueryViewModel.Create(job.Id, job.Title, job.Description, job.Location, job.Salary, job.IdStatus);
+
+            if (jobRepository is null)
+            {
+                return GenericViewModel<GetByidJobQueryViewModel>.Create(HttpStatusCode.NotFound, "Id not found!", null);
+
+            }
+            else
+            {
+                GetByidJobQueryViewModel job = GetByidJobQueryViewModel.Create(jobRepository.Id, jobRepository.Title, jobRepository.Description, jobRepository.Location, jobRepository.Salary, jobRepository.IdStatus);
+                return GenericViewModel<GetByidJobQueryViewModel>.Create(HttpStatusCode.OK, "Job retrieved successfully", job);
+
+            }
+        }
+        catch (Exception ex)
+        {
+
+            return GenericViewModel<GetByidJobQueryViewModel>.Create(HttpStatusCode.InternalServerError, "Error retrieving job: " + ex.Message, null);
+        }
     }
 }

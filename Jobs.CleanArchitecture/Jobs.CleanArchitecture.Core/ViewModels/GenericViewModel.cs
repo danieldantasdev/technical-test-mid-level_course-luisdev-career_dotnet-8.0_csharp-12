@@ -25,9 +25,9 @@ public class GenericViewModel<T>
         Data = data;
     }
 
-    public static GenericViewModel<T?> Create(HttpStatusCode httpStatusCode, string message, T? data)
+    public static GenericViewModel<T> Create(HttpStatusCode httpStatusCode, string message, T? data)
     {
-        return new GenericViewModel<T?>
+        return new GenericViewModel<T>
         {
             StatusCode = httpStatusCode,
             Date = DateTime.Now,

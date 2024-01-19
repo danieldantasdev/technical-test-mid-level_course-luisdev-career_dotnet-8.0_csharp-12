@@ -3,6 +3,7 @@ using Jobs.CleanArchitecture.Application.Commands.Jobs.Delete;
 using Jobs.CleanArchitecture.Application.Commands.Jobs.Update;
 using Jobs.CleanArchitecture.Application.Query.Jobs.GetAll;
 using Jobs.CleanArchitecture.Application.Query.Jobs.GetById;
+using Jobs.CleanArchitecture.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -57,12 +58,30 @@ namespace Jobs.CleanArchitecture.Api.Controllers
 
             var job = await _mediator.Send(getByidJobQueryInputModel);
 
-            if (job is null)
+            switch (job.StatusCode)
             {
-                return NotFound();
-            }
+                case HttpStatusCode.InternalServerError:
+                    {
 
-            return Ok(job);
+                        return StatusCode((int)HttpStatusCode.InternalServerError, job);
+                    };
+
+                case HttpStatusCode.OK:
+                    {
+
+                        return StatusCode((int)HttpStatusCode.OK, job);
+                    };
+                case HttpStatusCode.NotFound:
+                    {
+
+                        return StatusCode((int)HttpStatusCode.NotFound, job);
+                    };
+                default:
+                    {
+
+                        return StatusCode((int)HttpStatusCode.InternalServerError, job);
+                    };
+            }
         }
 
         [HttpPut("{id}")]
