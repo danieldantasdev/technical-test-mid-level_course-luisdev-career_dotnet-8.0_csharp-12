@@ -5,6 +5,7 @@ using Jobs.CleanArchitecture.Application.Query.Jobs.GetAll;
 using Jobs.CleanArchitecture.Application.Query.Jobs.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Jobs.CleanArchitecture.Api.Controllers
 {
@@ -26,7 +27,27 @@ namespace Jobs.CleanArchitecture.Api.Controllers
         public async Task<IActionResult> GetAll()
         {
             var jobs = await _mediator.Send(new GetAllJobsQueryInputModel());
-            return Ok(jobs);
+
+            switch (jobs.StatusCode)
+            {
+                case HttpStatusCode.InternalServerError:
+                    {
+
+                        return StatusCode((int)HttpStatusCode.InternalServerError, jobs);
+                    };
+
+                case HttpStatusCode.OK:
+                    {
+
+                        return StatusCode((int)HttpStatusCode.OK, jobs);
+                    };
+
+                default:
+                    {
+
+                        return StatusCode((int)HttpStatusCode.InternalServerError, jobs);
+                    };
+            }
         }
 
         [HttpGet("{Id}")]
@@ -35,12 +56,12 @@ namespace Jobs.CleanArchitecture.Api.Controllers
             GetByidJobQueryInputModel getByidJobQueryInputModel = GetByidJobQueryInputModel.Create(inputModel.Id);
 
             var job = await _mediator.Send(getByidJobQueryInputModel);
-           
+
             if (job is null)
             {
                 return NotFound();
             }
-           
+
             return Ok(job);
         }
 
