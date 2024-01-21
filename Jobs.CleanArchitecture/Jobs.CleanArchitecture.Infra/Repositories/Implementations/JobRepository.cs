@@ -49,7 +49,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
         }
         catch (Exception exception)
         {
-            throw new Exception("Error while querying for all jobs", exception);
+            throw new Exception("Error while querying for all jobs: " + exception.Message);
         }
     }
 
@@ -68,7 +68,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
         }
         catch (Exception exception)
         {
-            throw new Exception($"Error while querying for job with id {id}", exception);
+            throw new Exception($"Error while querying for job with id {id}: " + exception.Message);
         }
     }
 
