@@ -7,23 +7,23 @@ using Microsoft.Data.SqlClient;
 
 namespace Jobs.CleanArchitecture.Infra.Repositories.Implementations;
 
-internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) : IJobRepository
+internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactoryService) : IJobRepository
 {
-    private readonly ISqlConnectionFactoryService _sqlConnectionFactory = sqlConnectionFactory ?? throw new ArgumentNullException(nameof(sqlConnectionFactory));
+    private readonly ISqlConnectionFactoryService _sqlConnectionFactoryService = sqlConnectionFactoryService;
 
     public async Task<int> Post(Job entity)
     {
         try
         {
-            await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
+            await using SqlConnection sqlConnection = _sqlConnectionFactoryService.CreateConnection();
 
-            var result = await sqlConnection.ExecuteAsync(
+            int result = await sqlConnection.ExecuteAsync(
                 @"
                         INSERT INTO job 
                             (title, description, location, salary, id_status) 
                         VALUES 
-                            (@Title, @Description, @Location, @Salary, @IdStatus)
-                    ",
+                            (@Title, @Description, @Location, @Salary, @IdStatus);
+                ",
                 entity
             );
 
@@ -31,7 +31,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
         }
         catch (Exception exception)
         {
-            throw new Exception("Error while query insert execution", exception);
+            throw new Exception("Error while query insert execution: " + exception.Message);
         }
     }
 
@@ -39,9 +39,9 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
     {
         try
         {
-            await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
+            await using SqlConnection sqlConnection = _sqlConnectionFactoryService.CreateConnection();
 
-            var jobs = await sqlConnection.QueryAsync<Job>(
+            IEnumerable<Job> jobs = await sqlConnection.QueryAsync<Job>(
                 "SELECT j.id Id, j.title Title, j.description Description, j.location Location, j.salary Salary, j.id_status IdStatus FROM job j"
             );
 
@@ -53,13 +53,13 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
         }
     }
 
-    public async Task<Job> GetById(int id)
+    public async Task<Job?> GetById(int id)
     {
         try
         {
-            await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
+            await using SqlConnection sqlConnection = _sqlConnectionFactoryService.CreateConnection();
 
-            var job = await sqlConnection.QueryFirstOrDefaultAsync<Job>(
+            Job? job = await sqlConnection.QueryFirstOrDefaultAsync<Job>(
                 "SELECT j.id Id, j.title Title, j.description Description, j.location Location, j.salary Salary, j.id_status IdStatus FROM job j WHERE j.id = @Id",
                 new { Id = id }
             );
@@ -76,9 +76,9 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
     {
         try
         {
-            await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
+            await using SqlConnection sqlConnection = _sqlConnectionFactoryService.CreateConnection();
 
-            var result = await sqlConnection.ExecuteAsync(
+            int result = await sqlConnection.ExecuteAsync(
                 @"
                         UPDATE job 
                         SET 
@@ -97,7 +97,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
         }
         catch (Exception exception)
         {
-            throw new Exception("Error while updating job", exception);
+            throw new Exception("Error while updating job: " + exception.Message);
         }
     }
 
@@ -105,9 +105,9 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
     {
         try
         {
-            await using SqlConnection sqlConnection = _sqlConnectionFactory.CreateConnection();
+            await using SqlConnection sqlConnection = _sqlConnectionFactoryService.CreateConnection();
 
-            var result = await sqlConnection.ExecuteAsync(
+            int result = await sqlConnection.ExecuteAsync(
                 "DELETE FROM job WHERE id = @id",
                 new { id }
             );
@@ -116,7 +116,7 @@ internal class JobRepository(ISqlConnectionFactoryService sqlConnectionFactory) 
         }
         catch (Exception exception)
         {
-            throw new Exception("Error while deleting job", exception);
+            throw new Exception("Error while deleting job: " + exception.Message);
         }
     }
 }

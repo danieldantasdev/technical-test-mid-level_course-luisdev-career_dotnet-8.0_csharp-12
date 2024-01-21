@@ -1,5 +1,4 @@
-﻿using Jobs.CleanArchitecture.Application.Query.Jobs.GetAll;
-using Jobs.CleanArchitecture.Core.Entities;
+﻿using Jobs.CleanArchitecture.Core.Entities;
 using Jobs.CleanArchitecture.Core.Repositories.Interfaces.Entities;
 using Jobs.CleanArchitecture.Core.ViewModels;
 using MediatR;
@@ -15,8 +14,7 @@ public class GetByidJobQueryHandler(IJobRepository jobRepository) : IRequestHand
     {
         try
         {
-            Job jobRepository = await _jobRepository.GetById(request.Id);
-
+            Job? jobRepository = await _jobRepository.GetById(request.Id);
 
             if (jobRepository is null)
             {

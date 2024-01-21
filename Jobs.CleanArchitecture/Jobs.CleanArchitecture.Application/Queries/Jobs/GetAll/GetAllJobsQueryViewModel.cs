@@ -2,7 +2,7 @@
 
 namespace Jobs.CleanArchitecture.Application.Query.Jobs.GetAll;
 
-public class GetAllJobsQueryViewModel
+public record GetAllJobsQueryViewModel
 {
     public int Id { get; init; }
     public string Title { get; init; }

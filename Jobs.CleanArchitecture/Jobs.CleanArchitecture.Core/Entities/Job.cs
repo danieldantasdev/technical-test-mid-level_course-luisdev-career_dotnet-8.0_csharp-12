@@ -45,10 +45,11 @@ sealed public class Job : BaseEntity
         };
     }
 
-    public static Job Update(string title, string description, string location, decimal salary, int idStatus)
+    public static Job Update(int id, string title, string description, string location, decimal salary, int idStatus)
     {
         return new Job
         {
+            Id = id,
             Title = title,
             Description = description,
             Location = location,

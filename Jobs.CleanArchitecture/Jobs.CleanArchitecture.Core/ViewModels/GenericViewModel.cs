@@ -2,7 +2,7 @@
 
 namespace Jobs.CleanArchitecture.Core.ViewModels;
 
-public class GenericViewModel<T>
+public record GenericViewModel<T>
 {
     public HttpStatusCode StatusCode { get; init; }
     public DateTime Date { get; init; }

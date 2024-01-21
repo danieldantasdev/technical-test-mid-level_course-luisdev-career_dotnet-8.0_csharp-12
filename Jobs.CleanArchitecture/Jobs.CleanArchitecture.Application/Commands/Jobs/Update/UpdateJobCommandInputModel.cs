@@ -1,9 +1,10 @@
 ﻿using Jobs.CleanArchitecture.Core.Entities;
+using Jobs.CleanArchitecture.Core.ViewModels;
 using MediatR;
 
 namespace Jobs.CleanArchitecture.Application.Commands.Jobs.Update;
 
-public record UpdateJobCommandInputModel : IRequest<UpdateJobCommandViewModel>
+public record UpdateJobCommandInputModel : IRequest<GenericViewModel<UpdateJobCommandViewModel>>
 {
     public int Id { get; init; }
     public string Title { get; init; }
@@ -48,6 +49,7 @@ public record UpdateJobCommandInputModel : IRequest<UpdateJobCommandViewModel>
     public static Job ToEntity(UpdateJobCommandInputModel updateJobCommandInputModel)
     {
         return Job.Update(
+        updateJobCommandInputModel.Id,
         updateJobCommandInputModel.Title,
         updateJobCommandInputModel.Description,
         updateJobCommandInputModel.Location,

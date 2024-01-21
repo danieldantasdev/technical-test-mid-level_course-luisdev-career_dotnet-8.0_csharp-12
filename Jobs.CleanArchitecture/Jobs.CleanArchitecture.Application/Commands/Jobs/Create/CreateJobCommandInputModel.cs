@@ -1,9 +1,10 @@
 ﻿using Jobs.CleanArchitecture.Core.Entities;
+using Jobs.CleanArchitecture.Core.ViewModels;
 using MediatR;
 
 namespace Jobs.CleanArchitecture.Application.Commands.Jobs.Create;
 
-public record CreateJobCommandInputModel : IRequest<CreateJobCommandViewModel>
+public record CreateJobCommandInputModel : IRequest<GenericViewModel<CreateJobCommandViewModel>>
 {
     public string Title { get; init; }
     public string Description { get; init; }

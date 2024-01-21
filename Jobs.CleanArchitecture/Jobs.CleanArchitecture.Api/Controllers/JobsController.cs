@@ -19,9 +19,25 @@ namespace Jobs.CleanArchitecture.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateJobCommandInputModel inputModel)
         {
-            var createdJobCommandViewModel = await _mediator.Send(inputModel);
+            GenericViewModel<CreateJobCommandViewModel> viewModel = await _mediator.Send(inputModel);
 
-            return CreatedAtAction(nameof(GetById), new { id = createdJobCommandViewModel.Id }, createdJobCommandViewModel);
+            switch (viewModel.StatusCode)
+            {
+                case HttpStatusCode.InternalServerError:
+                    {
+                        return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
+                    };
+
+                case HttpStatusCode.Created:
+                    {
+                        return StatusCode((int)HttpStatusCode.Created, viewModel);
+                    };
+
+                default:
+                    {
+                        return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
+                    };
+            }
         }
 
         [HttpGet]
@@ -33,19 +49,16 @@ namespace Jobs.CleanArchitecture.Api.Controllers
             {
                 case HttpStatusCode.InternalServerError:
                     {
-
                         return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
                     };
 
                 case HttpStatusCode.OK:
                     {
-
                         return StatusCode((int)HttpStatusCode.OK, viewModel);
                     };
 
                 default:
                     {
-
                         return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
                     };
             }
@@ -56,7 +69,6 @@ namespace Jobs.CleanArchitecture.Api.Controllers
 
         {
             GetByidJobQueryInputModel getByidJobQueryInputModel = GetByidJobQueryInputModel.Create(inputModel.Id);
-
             GenericViewModel<GetByidJobQueryViewModel> viewModel = await _mediator.Send(getByidJobQueryInputModel);
 
             switch (viewModel.StatusCode)
@@ -79,7 +91,6 @@ namespace Jobs.CleanArchitecture.Api.Controllers
                     };
                 default:
                     {
-
                         return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
                     };
             }
@@ -88,25 +99,29 @@ namespace Jobs.CleanArchitecture.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateJobCommandInputModel inputModel)
         {
-            UpdateJobCommandInputModel updateJobCommandInputModel = UpdateJobCommandInputModel
-                .Create
-                (
-                    id,
-                    inputModel.Title,
-                    inputModel.Description,
-                    inputModel.Location,
-                    inputModel.Salary,
-                    inputModel.IdStatus
-                );
+            UpdateJobCommandInputModel updateJobCommandInputModel = UpdateJobCommandInputModel.Create(id, inputModel.Title, inputModel.Description, inputModel.Location, inputModel.Salary, inputModel.IdStatus);
+            GenericViewModel<UpdateJobCommandViewModel> viewModel = await _mediator.Send(updateJobCommandInputModel);
 
-            var result = await _mediator.Send(updateJobCommandInputModel);
-
-            if (result is null)
+            switch (viewModel.StatusCode)
             {
-                return NotFound();
-            }
+                case HttpStatusCode.InternalServerError:
+                    {
+                        return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
+                    };
 
-            return NoContent();
+                case HttpStatusCode.NoContent:
+                    {
+                        return StatusCode((int)HttpStatusCode.NoContent, viewModel);
+                    };
+                case HttpStatusCode.NotFound:
+                    {
+                        return StatusCode((int)HttpStatusCode.NotFound, viewModel);
+                    };
+                default:
+                    {
+                        return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
+                    };
+            }
         }
 
         [HttpDelete("{Id}")]
