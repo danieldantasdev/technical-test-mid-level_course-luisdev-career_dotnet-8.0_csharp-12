@@ -14,16 +14,16 @@ public class GetAllJobsQueryHandler(IJobRepository jobRepository) : IRequestHand
     {
         try
         {
-            List<GetAllJobsQueryViewModel> jobs = [];
+            List<GetAllJobsQueryViewModel> jobsViewModel = [];
 
             List<Job> jobsRepository = await _jobRepository.GetAll();
 
-            foreach (var job in jobsRepository)
+            foreach (var jobRepository in jobsRepository)
             {
-                jobs.Add(GetAllJobsQueryViewModel.ToViewModel(job));
+                jobsViewModel.Add(GetAllJobsQueryViewModel.ToViewModel(jobRepository));
             }    
 
-            return GenericViewModel<List<GetAllJobsQueryViewModel>>.Create(HttpStatusCode.OK, "Jobs retrieved successfully", jobs);
+            return GenericViewModel<List<GetAllJobsQueryViewModel>>.Create(HttpStatusCode.OK, "Jobs retrieved successfully", jobsViewModel);
         }
         catch (Exception ex)
         {
