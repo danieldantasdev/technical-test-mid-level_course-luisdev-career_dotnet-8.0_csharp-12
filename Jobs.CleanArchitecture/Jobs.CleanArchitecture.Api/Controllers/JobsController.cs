@@ -3,7 +3,7 @@ using Jobs.CleanArchitecture.Application.Commands.Jobs.Delete;
 using Jobs.CleanArchitecture.Application.Commands.Jobs.Update;
 using Jobs.CleanArchitecture.Application.Query.Jobs.GetAll;
 using Jobs.CleanArchitecture.Application.Query.Jobs.GetById;
-using Jobs.CleanArchitecture.Core.Entities;
+using Jobs.CleanArchitecture.Core.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -27,59 +27,60 @@ namespace Jobs.CleanArchitecture.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var jobs = await _mediator.Send(new GetAllJobsQueryInputModel());
+            GenericViewModel<List<GetAllJobsQueryViewModel>> viewModel = await _mediator.Send(new GetAllJobsQueryInputModel());
 
-            switch (jobs.StatusCode)
+            switch (viewModel.StatusCode)
             {
                 case HttpStatusCode.InternalServerError:
                     {
 
-                        return StatusCode((int)HttpStatusCode.InternalServerError, jobs);
+                        return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
                     };
 
                 case HttpStatusCode.OK:
                     {
 
-                        return StatusCode((int)HttpStatusCode.OK, jobs);
+                        return StatusCode((int)HttpStatusCode.OK, viewModel);
                     };
 
                 default:
                     {
 
-                        return StatusCode((int)HttpStatusCode.InternalServerError, jobs);
+                        return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
                     };
             }
         }
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetByidJobQueryInputModel inputModel)
+
         {
             GetByidJobQueryInputModel getByidJobQueryInputModel = GetByidJobQueryInputModel.Create(inputModel.Id);
 
-            var job = await _mediator.Send(getByidJobQueryInputModel);
+            GenericViewModel<GetByidJobQueryViewModel> viewModel = await _mediator.Send(getByidJobQueryInputModel);
 
-            switch (job.StatusCode)
+            switch (viewModel.StatusCode)
             {
                 case HttpStatusCode.InternalServerError:
                     {
 
-                        return StatusCode((int)HttpStatusCode.InternalServerError, job);
+                        return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
                     };
 
                 case HttpStatusCode.OK:
                     {
 
-                        return StatusCode((int)HttpStatusCode.OK, job);
+                        return StatusCode((int)HttpStatusCode.OK, viewModel);
                     };
                 case HttpStatusCode.NotFound:
                     {
 
-                        return StatusCode((int)HttpStatusCode.NotFound, job);
+                        return StatusCode((int)HttpStatusCode.NotFound, viewModel);
                     };
                 default:
                     {
 
-                        return StatusCode((int)HttpStatusCode.InternalServerError, job);
+                        return StatusCode((int)HttpStatusCode.InternalServerError, viewModel);
                     };
             }
         }
