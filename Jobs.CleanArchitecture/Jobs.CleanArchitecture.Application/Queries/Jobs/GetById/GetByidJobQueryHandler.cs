@@ -25,8 +25,8 @@ public class GetByidJobQueryHandler(IJobRepository jobRepository) : IRequestHand
             }
             else
             {
-                GetByidJobQueryViewModel job = GetByidJobQueryViewModel.Create(jobRepository.Id, jobRepository.Title, jobRepository.Description, jobRepository.Location, jobRepository.Salary, jobRepository.IdStatus);
-                return GenericViewModel<GetByidJobQueryViewModel>.Create(HttpStatusCode.OK, "Job retrieved successfully", job);
+                GetByidJobQueryViewModel jobViewModel = GetByidJobQueryViewModel.ToViewModel(jobRepository);
+                return GenericViewModel<GetByidJobQueryViewModel>.Create(HttpStatusCode.OK, "Job retrieved successfully", jobViewModel);
 
             }
         }
